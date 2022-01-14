@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:suitmedia_test/models/user.dart';
 import '../providers/username_provider.dart';
 
 import '../config/style.dart';
 
 import '../widgets/app_layout.dart';
-import '../widgets/image_avatar.dart';
+import '../widgets/user_content.dart';
 
 class ThirdPage extends StatelessWidget {
   const ThirdPage({Key? key}) : super(key: key);
@@ -21,66 +20,47 @@ class ThirdPage extends StatelessWidget {
           UsernameProvider username,
           Widget? child,
         ) {
-          return ListView.separated(
-            itemCount: username.length,
-            separatorBuilder: (BuildContext context, int index) {
-              return const Divider(height: 1);
-            },
-            itemBuilder: (BuildContext context, int index) {
-              String _fullName =
-                  '${username.list[index].firstName} ${username.list[index].lastName}';
-              return _listContent(
-                state: username.state,
-                avatar: username.list[index].avatar,
-                fullName: _fullName,
-                email: username.list[index].email,
-                onTap: () {
-                  username.setUsername(_fullName);
-                },
-              );
-            },
+          return RefreshIndicator(
+            onRefresh: username.getUser,
+            child: _listContent(username),
           );
         },
       ),
     );
   }
 
-  Widget _listContent({
-    required String state,
-    required String avatar,
-    required String fullName,
-    required String email,
-    required VoidCallback onTap,
-  }) {
-    if (state == 'loading') {
+  Widget _listContent(UsernameProvider username) {
+    if (username.state == 'loading') {
       return const Center(
         child: CircularProgressIndicator(),
       );
-    } else if (state == 'has data') {
-      return InkWell(
-        child: ListTile(
-          leading: ImageAvatar(
-            url: avatar,
-          ),
-          title: Text(
-            fullName,
-            style: titleListText,
-          ),
-          subtitle: Text(
-            email,
-            style: subtitleListText,
-          ),
-        ),
-        onTap: onTap,
+    } else if (username.state == 'has data') {
+      return ListView.separated(
+        itemCount: username.length,
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider(height: 1);
+        },
+        itemBuilder: (BuildContext context, int index) {
+          String _fullName =
+              '${username.list[index].firstName} ${username.list[index].lastName}';
+          return UserContent(
+            image: username.list[index].avatar,
+            fullName: _fullName,
+            email: username.list[index].email,
+            onTap: () {
+              username.setUsername(_fullName);
+            },
+          );
+        },
       );
-    } else if (state == 'empty') {
+    } else if (username.state == 'empty') {
       return Center(
         child: Text(
           'Data is empty!',
           style: regularText(13),
         ),
       );
-    } else if (state == 'error') {
+    } else if (username.state == 'error') {
       return Center(
         child: Text(
           'Connection error!',

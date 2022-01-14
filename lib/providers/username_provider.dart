@@ -5,25 +5,25 @@ import '../network/user_api.dart';
 
 class UsernameProvider with ChangeNotifier {
   final List<Datum> _userList = [];
-  String _state = '';
+  String _state = 'loading';
   String _username = 'Selected User Name';
 
   UsernameProvider() {
-    _getUser();
+    getUser();
   }
 
   // get api
-  Future<void> _getUser() async {
+  Future<void> getUser() async {
     try {
       _state = 'loading';
       notifyListeners();
-
       User? user = await UserApi.getUser();
       if(user == null) {
         _state = 'empty';
         notifyListeners();
       } else {
         _state = 'has data';
+        _userList.clear();
         _userList.addAll(user.data);
         notifyListeners();
       }
