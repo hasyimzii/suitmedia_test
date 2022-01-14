@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 
 class PalindromeProvider with ChangeNotifier {
-  bool _result = false;
+  String _result = '';
 
-  bool get result => _result;
+  String get result => _result;
 
-  void palindrome(String text) {
+  void check(String text) {
     // slicing
     String start = text[0];
     String end = text.substring(text.length - 1);
@@ -15,15 +15,15 @@ class PalindromeProvider with ChangeNotifier {
     if (start == end) {
       if (text.length > 2) {
         // recursive
-        return palindrome(cut); 
+        return check(cut); 
       } else {
         // is palindrome
-        _result = true;
+        _result = 'is palindrome';
         notifyListeners();
       }
     } else {
         // not palindrome
-      _result = false;
+      _result = 'not palindrome';
       notifyListeners();
     }
   }

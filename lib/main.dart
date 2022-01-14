@@ -21,6 +21,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (BuildContext context) => NameProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => PalindromeProvider(),
+        ),
       ],
       builder: (
         BuildContext context,
