@@ -3,8 +3,11 @@ import 'package:provider/provider.dart';
 
 import 'providers/name_provider.dart';
 import 'providers/palindrome_provider.dart';
+import 'providers/username_provider.dart';
 
 import 'views/first_page.dart';
+import 'views/second_page.dart';
+import 'views/third_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +27,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (BuildContext context) => PalindromeProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => UsernameProvider(),
+        ),
       ],
       builder: (
         BuildContext context,
@@ -37,6 +43,8 @@ class MyApp extends StatelessWidget {
           initialRoute: '/first_page',
           routes: {
             '/first_page': (context) => const FirstPage(),
+            '/second_page': (context) => const SecondPage(),
+            '/third_page': (context) => const ThirdPage(),
           },
         );
       }

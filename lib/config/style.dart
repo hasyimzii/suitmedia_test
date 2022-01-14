@@ -16,16 +16,16 @@ TextStyle titleText(double font) => TextStyle(
   fontSize: font,
 );
 
-TextStyle titleListText(double font) => TextStyle(
+TextStyle titleListText = TextStyle(
   color: blackColor,
   fontWeight: medium,
-  fontSize: font,
+  fontSize: 16,
 );
 
-TextStyle subtitleListText(double font) => TextStyle(
+TextStyle subtitleListText = TextStyle(
   color: blackColor.withOpacity(0.6),
   fontWeight: medium,
-  fontSize: font,
+  fontSize: 10,
 );
 
 TextStyle labelText = TextStyle(
@@ -38,5 +38,11 @@ TextStyle labelText = TextStyle(
 TextStyle whiteText(double font) =>  TextStyle(
   color: whiteColor,
   fontWeight: medium,
+  fontSize: font,
+);
+
+TextStyle regularText(double font) => TextStyle(
+  color: blackColor,
+  fontWeight: regular,
   fontSize: font,
 );
