@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 Color whiteColor = const Color(0xFFFFFFFF);
 Color blackColor = const Color(0xFF04021D);
+Color lightColor = const Color(0xFFE2E3E4);
 Color blueColor = const Color(0xFF554AF0);
 Color greenColor = const Color(0xFF2B637B);
 
@@ -31,10 +32,11 @@ TextStyle labelText = TextStyle(
   color: blackColor.withOpacity(0.36),
   fontWeight: medium,
   fontSize: 16,
+  height: 1.5,
 );
 
-TextStyle buttonText = TextStyle(
+TextStyle whiteText(double font) =>  TextStyle(
   color: whiteColor,
   fontWeight: medium,
-  fontSize: 14,
+  fontSize: font,
 );

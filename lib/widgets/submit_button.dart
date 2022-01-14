@@ -13,12 +13,14 @@ class SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      width: double.infinity,
+      height: 51,
       padding: const EdgeInsets.only(bottom: 15),
       child: ElevatedButton(
         child: Text(
           label,
-          style: buttonText,
+          style: whiteText(14),
         ),
         style: ElevatedButton.styleFrom(
           elevation: 0,

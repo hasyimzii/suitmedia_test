@@ -5,7 +5,10 @@ class PalindromeProvider with ChangeNotifier {
 
   String get result => _result;
 
-  void check(String text) {
+  void check(String input) {
+    // remove space
+    String text = input.replaceAll(" ", "");
+
     // slicing
     String start = text[0];
     String end = text.substring(text.length - 1);
@@ -14,15 +17,21 @@ class PalindromeProvider with ChangeNotifier {
     // check palindrome
     if (start == end) {
       if (text.length > 2) {
-        // recursive
-        return check(cut); 
+        if (text.length == 3) {
+          // is palindrome
+          _result = 'is palindrome';
+          notifyListeners();
+        } else {
+          // recursive
+          return check(cut);
+        }
       } else {
         // is palindrome
         _result = 'is palindrome';
         notifyListeners();
       }
     } else {
-        // not palindrome
+      // not palindrome
       _result = 'not palindrome';
       notifyListeners();
     }
