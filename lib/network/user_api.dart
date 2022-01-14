@@ -9,11 +9,14 @@ class UserApi {
     ),
   );
 
-  static Future<User?> getUser() async {
+  static Future<User?> getUser({
+    required int page,
+  }) async {
     try {
       Response response = await _dio.get(
         '/users',
         queryParameters: <String, dynamic>{
+          'page': page,
           'per_page': 6,
         },
       );

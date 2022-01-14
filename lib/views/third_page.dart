@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:provider/provider.dart';
 import '../providers/username_provider.dart';
 
@@ -12,6 +13,7 @@ class ThirdPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RefreshController _refreshController = RefreshController(initialRefresh: true);
     return AppLayout(
       title: 'Third Screen',
       body: Consumer<UsernameProvider>(
@@ -20,8 +22,28 @@ class ThirdPage extends StatelessWidget {
           UsernameProvider username,
           Widget? child,
         ) {
-          return RefreshIndicator(
-            onRefresh: username.getUser,
+          return SmartRefresher(
+            controller: _refreshController,
+            header: const ClassicHeader(),
+            enablePullUp: true,
+            onRefresh: () async {
+              final bool result = await username.getUser(isRefresh: true);
+              if(result) {
+                _refreshController.refreshCompleted();
+                _refreshController.loadComplete();
+              } else {
+                _refreshController.refreshFailed();
+                _refreshController.loadComplete();
+              }
+            },
+            onLoading: () async {
+              final bool result = await username.getUser();
+              if(result) {
+                _refreshController.loadComplete();
+              } else {
+                _refreshController.loadNoData();
+              }
+            },
             child: _listContent(username),
           );
         },
@@ -68,7 +90,12 @@ class ThirdPage extends StatelessWidget {
         ),
       );
     } else {
-      return const Text('');
+      return Center(
+        child: Text(
+          'Something went wrong!',
+          style: regularText(13),
+        ),
+      );
     }
   }
 }
