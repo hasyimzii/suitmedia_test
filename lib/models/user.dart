@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-class UserModel {
-    UserModel({
+class User {
+    User({
         required this.page,
         required this.perPage,
         required this.total,
@@ -17,11 +17,11 @@ class UserModel {
     final List<Datum> data;
     final Support support;
 
-    factory UserModel.fromJson(String str) => UserModel.fromMap(json.decode(str));
+    factory User.fromJson(String str) => User.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
-    factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
+    factory User.fromMap(Map<String, dynamic> json) => User(
         page: json["page"],
         perPage: json["per_page"],
         total: json["total"],
