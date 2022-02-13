@@ -14,17 +14,13 @@ class UserApi {
   static Future getUser({
     required int page,
   }) async {
-    try {
-      Response response = await _dio.get(
-        '/users',
-        queryParameters: <String, dynamic>{
-          'page': page,
-          'per_page': 6,
-        },
-      );
-      return User.fromMap(response.data);
-    } catch (e) {
-      return e;
-    }
+    Response response = await _dio.get(
+      '/users',
+      queryParameters: <String, dynamic>{
+        'page': page,
+        'per_page': 6,
+      },
+    );
+    return User.fromMap(response.data);
   }
 }

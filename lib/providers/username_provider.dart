@@ -28,9 +28,6 @@ class UsernameProvider with ChangeNotifier {
     }
 
     try {
-      // loading
-      _state = ResultState.loading;
-      notifyListeners();
       // get api
       User? user = await UserApi.getUser(page: _currentPage);
       // if empty

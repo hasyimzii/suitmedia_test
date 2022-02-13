@@ -29,7 +29,7 @@ class ThirdPage extends StatelessWidget {
             enablePullUp: true,
             onRefresh: () async {
               final bool result = await username.getUser(isRefresh: true);
-              if(result) {
+              if (result) {
                 _refreshController.refreshCompleted();
                 _refreshController.loadComplete();
               } else {
@@ -39,7 +39,7 @@ class ThirdPage extends StatelessWidget {
             },
             onLoading: () async {
               final bool result = await username.getUser();
-              if(result) {
+              if (result) {
                 _refreshController.loadComplete();
               } else {
                 _refreshController.loadNoData();
@@ -53,11 +53,43 @@ class ThirdPage extends StatelessWidget {
   }
 
   Widget _listContent(UsernameProvider username) {
-    if (username.state == ResultState.loading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    } else if (username.state == ResultState.hasData) {
+    // return FutureBuilder(
+    //   future: username.getUser(isRefresh: true),
+    //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+    //     if (snapshot.hasData) {
+    //       return ListView.separated(
+    //         itemCount: username.length,
+    //         separatorBuilder: (BuildContext context, int index) {
+    //           return const Divider(height: 1);
+    //         },
+    //         itemBuilder: (BuildContext context, int index) {
+    //           String _fullName =
+    //               '${username.list[index].firstName} ${username.list[index].lastName}';
+    //           return UserContent(
+    //             image: username.list[index].avatar,
+    //             fullName: _fullName,
+    //             email: username.list[index].email,
+    //             onTap: () {
+    //               username.setUsername(_fullName);
+    //             },
+    //           );
+    //         },
+    //       );
+    //     } else if (snapshot.hasError) {
+    //       return Center(
+    //         child: Text(
+    //           snapshot.error.toString(),
+    //           style: regularText(13),
+    //         ),
+    //       );
+    //     } else {
+    //       return const Center(
+    //         child: CircularProgressIndicator.adaptive(),
+    //       );
+    //     }
+    //   },
+    // );
+    if (username.state == ResultState.hasData) {
       return ListView.separated(
         itemCount: username.length,
         separatorBuilder: (BuildContext context, int index) {
