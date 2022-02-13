@@ -1,5 +1,7 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
-import '../config/constant.dart';
+import '../common/constant.dart';
 import '../models/user.dart';
 
 class UserApi {
@@ -9,7 +11,7 @@ class UserApi {
     ),
   );
 
-  static Future<User?> getUser({
+  static Future getUser({
     required int page,
   }) async {
     try {
@@ -22,7 +24,7 @@ class UserApi {
       );
       return User.fromMap(response.data);
     } catch (e) {
-      return null;
+      return e;
     }
   }
 }

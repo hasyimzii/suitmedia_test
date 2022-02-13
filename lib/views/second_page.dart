@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/name_provider.dart';
 import '../providers/username_provider.dart';
 
-import '../config/style.dart';
+import '../common/style.dart';
 
 import '../widgets/app_layout.dart';
 import '../widgets/submit_button.dart';

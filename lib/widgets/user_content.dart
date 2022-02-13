@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../config/style.dart';
+import '../common/style.dart';
 
 class UserContent extends StatelessWidget {
   final String image;

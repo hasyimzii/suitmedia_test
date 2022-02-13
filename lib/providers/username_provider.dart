@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+import '../common/result_state.dart';
 import '../models/user.dart';
 import '../network/user_api.dart';
 
@@ -7,7 +8,8 @@ class UsernameProvider with ChangeNotifier {
   List<Datum> _userList = [];
   int _currentPage = 1;
   int _totalPages = 1;
-  String _state = 'loading';
+  // String _state = 'loading';
+  ResultState? _state;
   String _username = 'Selected User Name';
 
   UsernameProvider() {
@@ -27,17 +29,17 @@ class UsernameProvider with ChangeNotifier {
 
     try {
       // loading
-      _state = 'loading';
+      _state = ResultState.loading;
       notifyListeners();
       // get api
       User? user = await UserApi.getUser(page: _currentPage);
       // if empty
       if(user == null) {
-        _state = 'empty';
+        _state = ResultState.noData;
         notifyListeners();
       // if has data
       } else {
-        _state = 'has data';
+        _state = ResultState.hasData;
         if (isRefresh) {
           _userList = user.data;
         } else {
@@ -49,7 +51,7 @@ class UsernameProvider with ChangeNotifier {
       }
     // if error
     } catch (e) {
-      _state = 'error';
+      _state = ResultState.error;
       notifyListeners();
     }
     return true;
@@ -57,7 +59,7 @@ class UsernameProvider with ChangeNotifier {
 
   // get api result
   List<Datum> get list => _userList;
-  String get state => _state;
+  ResultState? get state => _state;
   int get length => _userList.length;
 
   // get username

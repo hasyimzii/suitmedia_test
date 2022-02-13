@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:provider/provider.dart';
-import '../providers/username_provider.dart';
 
-import '../config/style.dart';
+import '../common/result_state.dart';
+import '../common/style.dart';
+
+import '../providers/username_provider.dart';
 
 import '../widgets/app_layout.dart';
 import '../widgets/user_content.dart';
@@ -24,7 +26,6 @@ class ThirdPage extends StatelessWidget {
         ) {
           return SmartRefresher(
             controller: _refreshController,
-            header: const ClassicHeader(),
             enablePullUp: true,
             onRefresh: () async {
               final bool result = await username.getUser(isRefresh: true);
@@ -52,11 +53,11 @@ class ThirdPage extends StatelessWidget {
   }
 
   Widget _listContent(UsernameProvider username) {
-    if (username.state == 'loading') {
+    if (username.state == ResultState.loading) {
       return const Center(
         child: CircularProgressIndicator(),
       );
-    } else if (username.state == 'has data') {
+    } else if (username.state == ResultState.hasData) {
       return ListView.separated(
         itemCount: username.length,
         separatorBuilder: (BuildContext context, int index) {
@@ -75,14 +76,14 @@ class ThirdPage extends StatelessWidget {
           );
         },
       );
-    } else if (username.state == 'empty') {
+    } else if (username.state == ResultState.noData) {
       return Center(
         child: Text(
           'Data is empty!',
           style: regularText(13),
         ),
       );
-    } else if (username.state == 'error') {
+    } else if (username.state == ResultState.error) {
       return Center(
         child: Text(
           'Connection error!',
