@@ -12,7 +12,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     on<GetUser>((event, emit) async {
       try {
-        if (state is UserInitial) {
+        if (state is UserInitial || event.isRefresh) {
           user = await UserApi.getUser(
             page: 1,
             perPage: 8,
@@ -25,7 +25,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         } else {
           UserLoaded userLoaded = state as UserLoaded;
           if (userLoaded.reachedMax) return;
-          
+
           user = await UserApi.getUser(
             page: userLoaded.page + 1,
             perPage: 8,

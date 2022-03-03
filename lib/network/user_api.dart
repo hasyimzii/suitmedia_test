@@ -14,15 +14,15 @@ class UserApi {
     required int perPage,
   }) async {
     try {
-    Response response = await _dio.get(
-      'users',
-      queryParameters: <String, dynamic>{
-        'page': page,
-        'per_page': perPage,
-      },
-    );
-    return User.fromJson(response.data);
-    } on DioError catch(e) {
+      Response response = await _dio.get(
+        'users',
+        queryParameters: <String, dynamic>{
+          'page': page,
+          'per_page': perPage,
+        },
+      );
+      return User.fromJson(response.data);
+    } on DioError catch (e) {
       throw Exception(e);
     }
   }

@@ -20,7 +20,7 @@ class ThirdPage extends StatelessWidget {
     double currentScroll = _scrollController.offset;
 
     if (currentScroll >= maxScroll) {
-      _userBloc.add(GetUser());
+      _userBloc.add(const GetUser());
     }
   }
 
@@ -35,7 +35,10 @@ class ThirdPage extends StatelessWidget {
         builder: (BuildContext context, UserState state) {
           if (state is UserLoaded) {
             if (state.user.isNotEmpty) {
-              return _listContent(state, _scrollController);
+              return RefreshIndicator(
+                onRefresh: () async => _userBloc.add(const GetUser(isRefresh: true)),
+                child: _listContent(state, _scrollController),
+              );
             } else {
               return Center(
                 child: Text(
