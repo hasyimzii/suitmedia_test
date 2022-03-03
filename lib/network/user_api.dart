@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dio/dio.dart';
 import '../common/constant.dart';
 import '../models/user.dart';
@@ -13,14 +11,19 @@ class UserApi {
 
   static Future getUser({
     required int page,
+    required int perPage,
   }) async {
+    try {
     Response response = await _dio.get(
-      '/users',
+      'users',
       queryParameters: <String, dynamic>{
         'page': page,
-        'per_page': 6,
+        'per_page': perPage,
       },
     );
-    return User.fromMap(response.data);
+    return User.fromJson(response.data);
+    } on DioError catch(e) {
+      throw Exception(e);
+    }
   }
 }

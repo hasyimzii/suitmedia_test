@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/name_provider.dart';
-import '../providers/username_provider.dart';
 
 import '../common/style.dart';
 
@@ -41,20 +40,20 @@ class SecondPage extends StatelessWidget {
               ),
             ],
           ),
-          Center(
-            child: Consumer<UsernameProvider>(
-              builder: (
-                BuildContext context,
-                UsernameProvider username,
-                Widget? child,
-              ) {
-                return Text(
-                  username.username,
-                  style: titleText(24),
-                );
-              },
-            ),
-          ),
+          // Center(
+          //   child: Consumer<UsernameProvider>(
+          //     builder: (
+          //       BuildContext context,
+          //       UsernameProvider username,
+          //       Widget? child,
+          //     ) {
+          //       return Text(
+          //         username.username,
+          //         style: titleText(24),
+          //       );
+          //     },
+          //   ),
+          // ),
           SubmitButton(
             label: 'Choose a User',
             onPressed: () {
