@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'Poppins',
         ),
-        initialRoute: '/third_page',
+        initialRoute: '/first_page',
         routes: {
           '/first_page': (context) => const FirstPage(),
           '/second_page': (context) => const SecondPage(),

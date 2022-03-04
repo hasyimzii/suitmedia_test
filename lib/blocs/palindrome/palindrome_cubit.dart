@@ -7,7 +7,7 @@ class PalindromeCubit extends Cubit<PalindromeState> {
   PalindromeCubit() : super(PalindromeInitial());
 
   void checkPalindrome(String value) {
-// remove space
+    // remove space
     String text = value.replaceAll(" ", "");
 
     // slicing

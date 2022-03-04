@@ -48,6 +48,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       }
     });
 
-    on<SetUser>((event, emit) => emit(UserSelected(username: event.username)));
+    on<SetUser>((event, emit) {
+      UserLoaded userLoaded = state as UserLoaded;
+      emit(userLoaded.copyWith(
+        username: event.username,
+      ));
+    });
   }
 }

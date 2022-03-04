@@ -40,11 +40,17 @@ class SecondPage extends StatelessWidget {
           Center(
             child: BlocBuilder<UserBloc, UserState>(
               builder: (context, state) {
-                UserSelected userSelected = state as UserSelected;
-                return Text(
-                  userSelected.username,
-                  style: titleText(24),
-                );
+                if (state is UserLoaded) {
+                  return Text(
+                    state.username,
+                    style: titleText(24),
+                  );
+                } else {
+                  return Text(
+                    'Select a User',
+                    style: titleText(24),
+                  );
+                }
               },
             ),
           ),

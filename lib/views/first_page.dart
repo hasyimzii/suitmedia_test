@@ -70,7 +70,8 @@ class FirstPage extends StatelessWidget {
                             // validate form
                             if (_formKey.currentState!.validate()) {
                               // run palindrome check
-                              PalindromeCubit _cubit = PalindromeCubit();
+                              PalindromeCubit _cubit =
+                                  context.read<PalindromeCubit>();
                               _cubit.checkPalindrome(
                                 _palindromeController.text,
                               );
@@ -82,7 +83,7 @@ class FirstPage extends StatelessWidget {
                         label: 'NEXT',
                         onPressed: () {
                           // validate form
-                          NameCubit _nameCubit = NameCubit();
+                          NameCubit _nameCubit = context.read<NameCubit>();
                           if (_formKey.currentState!.validate()) {
                             _nameCubit.setName(_nameController.text);
                             Navigator.pushNamed(

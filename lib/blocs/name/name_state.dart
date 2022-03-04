@@ -6,5 +6,5 @@ class NameState extends Equatable {
   const NameState({this.name = ''});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [name];
 }

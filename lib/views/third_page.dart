@@ -84,7 +84,10 @@ class ThirdPage extends StatelessWidget {
             image: user[index].avatar,
             fullName: _fullName,
             email: user[index].email,
-            onTap: () {},
+            onTap: () {
+              UserBloc _userBloc = context.read<UserBloc>();
+              _userBloc.add(SetUser(username: _fullName));
+            },
           );
         } else {
           return const Center(
