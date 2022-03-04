@@ -32,3 +32,14 @@ class UserLoaded extends UserState {
 }
 
 class UserError extends UserState {}
+
+class UserSelected extends UserState {
+  final String username;
+
+  const UserSelected({
+    this.username = 'Select a User',
+  });
+
+  @override
+  List<Object> get props => [username];
+}

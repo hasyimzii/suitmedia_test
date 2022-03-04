@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../providers/name_provider.dart';
+import '../blocs/name/name_cubit.dart';
+import '../blocs/user/user_bloc.dart';
 
 import '../common/style.dart';
 
@@ -26,34 +27,27 @@ class SecondPage extends StatelessWidget {
                 'Welcome',
                 style: regularText(12),
               ),
-              Consumer<NameProvider>(
-                builder: (
-                  BuildContext context,
-                  NameProvider name,
-                  Widget? child,
-                ) {
+              BlocBuilder<NameCubit, NameState>(
+                builder: (context, state) {
                   return Text(
-                    name.name,
+                    state.name,
                     style: titleText(18),
                   );
                 },
               ),
             ],
           ),
-          // Center(
-          //   child: Consumer<UsernameProvider>(
-          //     builder: (
-          //       BuildContext context,
-          //       UsernameProvider username,
-          //       Widget? child,
-          //     ) {
-          //       return Text(
-          //         username.username,
-          //         style: titleText(24),
-          //       );
-          //     },
-          //   ),
-          // ),
+          Center(
+            child: BlocBuilder<UserBloc, UserState>(
+              builder: (context, state) {
+                UserSelected userSelected = state as UserSelected;
+                return Text(
+                  userSelected.username,
+                  style: titleText(24),
+                );
+              },
+            ),
+          ),
           SubmitButton(
             label: 'Choose a User',
             onPressed: () {

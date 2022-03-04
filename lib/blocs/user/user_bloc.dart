@@ -47,5 +47,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         emit(UserError());
       }
     });
+
+    on<SetUser>((event, emit) => emit(UserSelected(username: event.username)));
   }
 }

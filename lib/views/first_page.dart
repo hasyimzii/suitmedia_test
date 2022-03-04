@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../providers/name_provider.dart';
-import '../providers/palindrome_provider.dart';
+import '../blocs/name/name_cubit.dart';
+import '../blocs/palindrome/palindrome_cubit.dart';
 
 import '../widgets/text_input.dart';
 import '../widgets/submit_button.dart';
@@ -53,51 +53,43 @@ class FirstPage extends StatelessWidget {
                         label: 'Palindrome',
                       ),
                       const SizedBox(height: 45),
-                      Consumer<PalindromeProvider>(
-                        builder: (
-                          BuildContext context,
-                          PalindromeProvider palindrome,
-                          Widget? child,
-                        ) {
-                          return SubmitButton(
-                            label: 'CHECK',
-                            onPressed: () {
-                              // validate form
-                              if (_formKey.currentState!.validate()) {
-                                // run palindrome check
-                                palindrome.check(_palindromeController.text);
-
-                                // set dialog snackbar
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    duration: const Duration(seconds: 2),
-                                    content: Text(palindrome.result),
-                                  ),
-                                );
-                              }
-                            },
-                          );
+                      BlocListener<PalindromeCubit, PalindromeState>(
+                        listener: (context, state) {
+                          if (state is PalindromeResult) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                duration: const Duration(seconds: 2),
+                                content: Text(state.message),
+                              ),
+                            );
+                          }
                         },
+                        child: SubmitButton(
+                          label: 'CHECK',
+                          onPressed: () {
+                            // validate form
+                            if (_formKey.currentState!.validate()) {
+                              // run palindrome check
+                              PalindromeCubit _cubit = PalindromeCubit();
+                              _cubit.checkPalindrome(
+                                _palindromeController.text,
+                              );
+                            }
+                          },
+                        ),
                       ),
-                      Consumer<NameProvider>(
-                        builder: (
-                          BuildContext context,
-                          NameProvider name,
-                          Widget? child,
-                        ) {
-                          return SubmitButton(
-                            label: 'NEXT',
-                            onPressed: () {
-                              // validate form
-                              if (_formKey.currentState!.validate()) {
-                                name.setName(_nameController.text);
-                                Navigator.pushNamed(
-                                  context,
-                                  '/second_page',
-                                );
-                              }
-                            },
-                          );
+                      SubmitButton(
+                        label: 'NEXT',
+                        onPressed: () {
+                          // validate form
+                          NameCubit _nameCubit = NameCubit();
+                          if (_formKey.currentState!.validate()) {
+                            _nameCubit.setName(_nameController.text);
+                            Navigator.pushNamed(
+                              context,
+                              '/second_page',
+                            );
+                          }
                         },
                       ),
                     ],

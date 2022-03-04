@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'blocs/name/name_cubit.dart';
+import 'blocs/palindrome/palindrome_cubit.dart';
 import 'blocs/user/user_bloc.dart';
 
 import 'views/first_page.dart';
@@ -20,6 +22,12 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+          create: (context) => NameCubit(),
+        ),
+        BlocProvider(
+          create: (context) => PalindromeCubit(),
+        ),
+        BlocProvider(
           create: (context) => UserBloc()..add(const GetUser()),
         ),
       ],
@@ -32,7 +40,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/first_page': (context) => const FirstPage(),
           '/second_page': (context) => const SecondPage(),
-          '/third_page': (context) => ThirdPage(),
+          '/third_page': (context) => const ThirdPage(),
         },
       ),
     );

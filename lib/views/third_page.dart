@@ -10,23 +10,22 @@ import '../widgets/app_layout.dart';
 import '../widgets/user_content.dart';
 
 class ThirdPage extends StatelessWidget {
-  ThirdPage({Key? key}) : super(key: key);
-
-  final ScrollController _scrollController = ScrollController();
-  UserBloc _userBloc = UserBloc();
-
-  void onScroll() {
-    double maxScroll = _scrollController.position.maxScrollExtent;
-    double currentScroll = _scrollController.offset;
-
-    if (currentScroll >= maxScroll) {
-      _userBloc.add(const GetUser());
-    }
-  }
+  const ThirdPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    _userBloc = context.read<UserBloc>();
+    final ScrollController _scrollController = ScrollController();
+    UserBloc _userBloc = context.read<UserBloc>();
+
+    void onScroll() {
+      double maxScroll = _scrollController.position.maxScrollExtent;
+      double currentScroll = _scrollController.offset;
+
+      if (currentScroll >= maxScroll) {
+        _userBloc.add(const GetUser());
+      }
+    }
+
     _scrollController.addListener(onScroll);
 
     return AppLayout(
@@ -36,7 +35,9 @@ class ThirdPage extends StatelessWidget {
           if (state is UserLoaded) {
             if (state.user.isNotEmpty) {
               return RefreshIndicator(
-                onRefresh: () async => _userBloc.add(const GetUser(isRefresh: true)),
+                onRefresh: () async => _userBloc.add(
+                  const GetUser(isRefresh: true),
+                ),
                 child: _listContent(state, _scrollController),
               );
             } else {
@@ -65,7 +66,9 @@ class ThirdPage extends StatelessWidget {
   }
 
   Widget _listContent(
-      UserLoaded userLoaded, ScrollController _scrollController) {
+    UserLoaded userLoaded,
+    ScrollController _scrollController,
+  ) {
     List<UserData> user = userLoaded.user;
 
     return ListView.separated(

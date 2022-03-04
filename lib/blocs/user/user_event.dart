@@ -17,3 +17,14 @@ class GetUser extends UserEvent {
   @override
   List<Object> get props => [isRefresh];
 }
+
+class SetUser extends UserEvent {
+  final String username;
+
+  const SetUser({
+    required this.username,
+  });
+
+  @override
+  List<Object> get props => [username];
+}
